@@ -1,0 +1,624 @@
+﻿<link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+
+ <style>
+    .row {
+        margin-top: 40px;
+        padding: 0 10px;
+    }
+
+    .clickable {
+        cursor: pointer;
+    }
+
+    .panel-heading span {
+        margin-top: -20px;
+        font-size: 15px;
+    }
+
+    pre{
+      font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+      margin-bottom: 10px;
+      overflow: auto;
+      width: auto;
+      padding: 5px;
+      background-color: #eee;
+      width: 650px!ie7;
+      padding-bottom: 20px!ie7;
+      max-height: 600px;
+    }
+
+    .tblCart {    
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .tblCart td, .tblCart th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+
+   .tblCart th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: grey;
+        color: white;
+    }
+</style>
+
+
+<header class="help-page">
+    <div class="content-wrapper">
+        <div class="float-left">
+            <h1>API Libraries</h1>
+        </div>
+    </div>
+</header>
+
+<div id="body" class="help-page">
+    <section class="featured">
+        <div class="content-wrapper">
+            <h2>Introduction</h2>
+            <p>
+               Welcome! See below the API library
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+   
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">GET api/products - List of products</h3>
+                        <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                    </div>
+                    <div class="panel-body" style="display:none;">
+
+                        Press "Try It" to get the list of products
+
+                        <div class="sample-content">
+                            <span><b>Calling the API</b></span>
+                            <pre>
+                            $.getJSON(/api/products)
+                            .done(function (data) {
+                                $.each(data, function (key, item) {
+                                    var row = '&lt;li&gt;' + item.Name + ': $' + item.Price + ' &lt;/li&gt;';
+                                    $("#products").append(row);
+                                });
+                            });
+                             </pre>
+                            Response (formatted):     
+                            <div class="warning-message-container" style="overflow: hidden; display: block;">
+                                 
+                                    <div class="col-md-4">
+                                        <p>
+                                            <ul id="products" />
+                                        </p>
+                                    </div>                                 
+
+                            </div>
+                            <br />
+                            Response (plain):     
+                            <pre id="try1Res">
+                        
+                             </pre>
+                        </div>
+
+                        <button class="sample-header pull-right" id="try1">Try It</button>
+
+                    </div>
+                </div>
+            </div>     
+        
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">GET api/products/{name} - Search product by name</h3>
+                        <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                    </div>
+                    <div class="panel-body" style="display:none;">
+
+                       Enter a product name in the parameter table and Press "Try It" to search
+                        <div class="panel-body" style="display:none;">
+                            <span><b>Calling the API</b></span>
+                            <pre>      
+                              
+                                        $.getJSON('/api/products/' + name)
+                                        .done(function (data) {
+                                            $('#productSearch').html('');
+                                            $.each(data, function (key, item) {
+                                                var row = '&lt;li&gt;'  + item.Name + ': $' + item.Price + ' &lt;/li&gt;';
+                                                $("#productSearch").append(row);
+                                            });
+                                        })
+                                        .fail(function (jqXHR, textStatus, err) {
+                                        });
+                              
+                             </pre>
+
+                            <table width="100%">
+                                <thead class="tblCart">
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Value</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><input type="text" id="prodName" style="display:block; width:100%; height:100%;" /></td>
+                                        <td>String</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br />
+                            Response (formatted):
+                            <div class="warning-message-container" style="overflow: hidden; display: block;">
+
+                                <div class="col-md-4">
+                                    <p>
+                                        <ul id="productSearch" />
+                                    </p>
+                                </div>
+
+
+                            </div>
+                            <br />
+                            Response (plain):
+                            <pre id="try2Res">
+                        
+                             </pre>
+                        </div>
+
+                        <button class="sample-header pull-right" id="try2">Try It</button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">POST /api/order/{id} - Add to cart</h3>
+                        <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                    </div>
+                    <div class="panel-body" style="display:none;">
+
+                        Enter a product id in the parameter table or click "Add to Cart". Press "Try It" to execute
+
+                        <div class="panel-body" style="display:none;">
+                            <span><b>Calling the API</b></span>
+                            <pre>      
+                                 $.ajax({
+                                            type: "POST",
+                                            url: '/api/order/' + pid,                                         
+                                            contentType: 'application/json',
+                                            success: function (data, status, xhr) {                                     
+                                               //if success proceed with you returned data
+                                            },
+                                            error: function (xhr) {
+                                               //error
+                                            }
+                                        });
+                                 </pre>
+
+                            <div class="col-md-4">
+                                <p>
+                                    <ul id="productShow" />
+                                </p>
+                            </div>     
+
+                            <table width="100%">
+                                <thead class="tblCart">
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Value</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Id</td>
+                                        <td><input type="text" id="prodId" style="display:block; width:100%; height:100%;" /></td>
+                                        <td>String</td>
+                                    </tr>
+                                </tbody>
+                            </table>                         
+                      
+                            <br />
+                            Response (plain):
+                            <pre id="try3Res">
+                        
+                            </pre>
+                        </div>
+
+                        <button class="sample-header pull-right" id="try3">Try It</button>
+
+                    </div>
+                </div>
+            </div>
+      
+            <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">GET api/orders - Show items in cart</h3>
+                    <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                </div>
+                <div class="panel-body" style="display:none;">
+
+                    Press "Try It" to get the list of items in the cart
+
+                    <div class="sample-content">
+                        <span><b>Calling the API</b></span>
+                        <pre>
+                               $.getJSON('/api/orders/' )
+                                    .done(function (data) {
+                                            //if success proceed with you returned data
+                                          
+                                        })
+                                        .fail(function (jqXHR, textStatus, err) {
+                                     });
+                             </pre>
+                        Response (formatted):
+                        <div class="warning-message-container" style="overflow: hidden; display: block;">
+
+                            @*<div class="col-md-4">
+                                <p>
+                                    <ul id="cartItems" />
+                                </p>
+                            </div>*@
+                            <table id="cartItems" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>UnitCost</th>
+                                        <th>QTY</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cartItemsBody">                            
+                                </tbody>
+                            </table>   
+
+                        </div>
+                        <br />
+                        Response (plain):
+                        <pre id="try4Res">
+                        
+                             </pre>
+                    </div>
+
+                    <button class="sample-header pull-right" id="try4">Try It</button>
+
+                </div>
+            </div>
+        </div>    
+
+            <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">PUT api/order/{id}/quantity/{qty}- Update quantity in cart</h3>
+                    <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                </div>
+                <div class="panel-body" style="display:none;">
+
+                    Enter a product id & a quantity in the parameter table. Press "Try It" to execute
+
+                    <div class="sample-content">
+                        <span><b>Calling the API</b></span>
+                        <pre>
+                                     $.ajax({
+                                            type: "PUT",
+                                            url: '/api/order/' + ordId + '/quantity/' + ordQty,
+                                            contentType: 'application/json',
+                                            success: function (data, status, xhr) {
+                                                //update cart
+                                            },
+                                            error: function (xhr) {
+                                                console.log(JSON.stringify(xhr));
+                                            }
+                                        });
+                             </pre>
+                        <br />
+                        <table id="cartItemsUpdate" width="100%">
+                            <thead class="tblCart">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>UnitCost</th>
+                                    <th>QTY</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cartItemsBodyUpdate"></tbody>
+                        </table>
+                        <br />
+                        <table width="100%">
+                            <thead class="tblCart">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Value</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Id</td>
+                                    <td><input type="text" id="orderId" style="display:block; width:100%; height:100%;" /></td>
+                                    <td>Int</td>
+                                </tr>
+                                <tr>
+                                    <td>Quantity</td>
+                                    <td><input type="text" id="orderQty" style="display:block; width:100%; height:100%;" /></td>
+                                    <td>Int</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        Response (formatted):
+                        <div class="warning-message-container" style="overflow: hidden; display: block;">
+
+                            <span id="try6Restext"> </span>
+
+                        </div>
+                        <br />
+                        Response (plain):
+                        <pre id="try6Res">
+                        
+                        </pre>
+                    </div>
+
+                    <button class="sample-header pull-right" id="try6">Try It</button>
+
+                </div>
+            </div>
+        </div>    
+
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">DELETE api/orders/clear - Clear items in cart</h3>
+                    <span class="pull-right clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                </div>
+                <div class="panel-body" style="display:none;">
+
+                     Press "Try It" to clear all items in the cart
+
+                    <div class="sample-content">
+                        <span><b>Calling the API</b></span>
+                        <pre>
+                                    $.ajax({
+                                            type: "DELETE",
+                                            url: '/api/orders/clear' ,                                         
+                                            contentType: 'application/json',
+                                            success: function (data, status, xhr) {              
+                                               //clear cart done
+                                            },
+                                            error: function (xhr) {
+                                                console.log(xhr.responseText);
+                                            }
+                                        });
+                        </pre>
+
+                        Response (formatted):
+                        <div class="warning-message-container" style="overflow: hidden; display: block;">
+
+                            <span id="try5Restext"> </span>
+                    
+
+                        </div>
+                        <br />
+                        Response (plain):
+                        <pre id="try5Res">
+                        
+                        </pre>
+                    </div>
+
+                    <button class="sample-header pull-right" id="try5">Try It</button>
+
+                </div>
+            </div>
+            </div>    
+
+           
+   
+    </section>
+</div>
+
+
+
+@section Scripts {
+<script>
+
+
+    $(document).on('click', '.panel-heading span.clickable', function (e) {
+        var $this = $(this);
+        if (!$this.hasClass('panel-collapsed')) {
+            $this.parents('.panel').find('.panel-body').slideUp();
+            $this.addClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+        } else {
+            $this.parents('.panel').find('.panel-body').slideDown();
+            $this.removeClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+        }
+    })
+
+    $(document).ready(function () {
+
+
+        $.getJSON('/api/products')
+             .done(function (data) {
+                   
+                 $.each(data, function (key, item) {                  
+
+                     var row = '<li>' + item.Name + ': $' + item.Price + ' <a  data-id="' + item.Id + '" class="itemCart" > Add to Cart </a> ( Id= "'+ item.Id+'" )</li>';                   
+                     $("#productShow").append(row);
+                 });
+            
+             });
+
+        RefreshCart();
+
+    
+        $('#try1').click(function () {
+
+            $("#products").html('');
+
+            // Send an AJAX request
+            $.getJSON('/api/products')
+                .done(function (data) {
+                   
+                    $.each(data, function (key, item) {         
+                        var row = '<li>' + item.Name + ': $' + item.Price + '</li>';
+                        $("#products").append(row);
+                    });
+
+                    $("#try1Res").html(JSON.stringify(data))
+                });
+            });
+
+
+
+        $('#try2').click(function () {
+            var name = $('#prodName').val();
+            $.getJSON('/api/products/' + name)
+                .done(function (data) {
+                    $('#productSearch').html('');
+
+                    $.each(data, function (key, item) {
+                        var row = '<li>' + item.Name + ': $' + item.Price + '</li>';
+                        $("#productSearch").append(row);
+                    });
+
+                    $("#try2Res").html(JSON.stringify(data))
+                })
+                .fail(function (jqXHR, textStatus, err) {
+
+                });
+        });
+         
+
+
+        $("#productShow").on("click", ".itemCart", function () {
+            var pid = $(this).data("id");
+            $("#prodId").val(pid);
+            AddToCart(pid);
+
+        });
+
+        $('#try3').click(function () {
+            var pid = $("#prodId").val();
+            AddToCart(pid);
+        });
+
+        function AddToCart(pid)
+        {
+            $.ajax({
+                type: "POST",
+                url: '/api/order/' + pid,           
+                contentType: 'application/json',
+                success: function (data, status, xhr) {               
+                    $("#try3Res").html(JSON.stringify(JSON.stringify(xhr)))
+                    RefreshCart();
+                },
+                error: function (data, status, xhr) {
+                    $("#try3Res").html(JSON.stringify(status));
+                }
+            });
+        }
+      
+        $('#try4').click(function () {
+    
+            $.getJSON('/api/orders/' )
+                .done(function (data) {
+
+                    $("#cartItemsBody").empty(); 
+                    $.each(data, function (key, item) {
+                  
+                        var markup = "<tr><td>" + item.Name + "</td>" +
+                            "<td>" + item.UnitCost + "</td>" +
+                             "<td>" + item.Quantity + "</td>" +
+                            "<td> " + item.Amount + "</td></tr>";
+                      
+                           $("#cartItems tbody").append(markup);
+                    });
+
+                    $("#try4Res").html(JSON.stringify(data))
+                })
+                .fail(function (jqXHR, textStatus, err) {
+
+                });
+        });
+
+        $('#try5').click(function () {
+
+            $.ajax({
+                type: "DELETE",
+                url: '/api/orders/clear' ,           
+                contentType: 'application/json',
+                success: function (data, status, xhr) {              
+                    $("#try5Res").html(JSON.stringify(JSON.stringify(xhr)))
+                    $("#try5Restext").html(JSON.stringify(status))               
+                    RefreshCart();
+                },
+                error: function (xhr) {
+                    console.log(JSON.stringify(xhr));
+                }
+            });
+
+        });
+
+        function RefreshCart()
+        {
+         
+            $.getJSON('/api/orders/')
+               .done(function (data) {
+
+                   $("#cartItemsBodyUpdate").empty();
+                   $.each(data, function (key, item) {
+
+                       var markup = "<tr><td>" + item.Id + "</td>" +
+                             "<td>" + item.Name + "</td>" +
+                           "<td>" + item.UnitCost + "</td>" +
+                            "<td>" + item.Quantity + "</td>" +
+                           "<td> " + item.Amount + "</td></tr>";
+                       $("#cartItemsUpdate tbody").append(markup);
+                   });
+                 
+               
+               })
+               .fail(function (jqXHR, textStatus, err) {
+                   
+               });
+        }
+
+        $('#try6').click(function () {
+
+            var ordId = $('#orderId').val();
+            var ordQty = $('#orderQty').val();
+
+            $.ajax({
+                type: "PUT",
+                url: '/api/order/' + ordId + '/quantity/' + ordQty,
+                contentType: 'application/json',
+                success: function (data, status, xhr) {
+                    $("#try6Res").html(JSON.stringify(JSON.stringify(xhr)))
+                    $("#try6Restext").html(JSON.stringify(status))
+                    RefreshCart();
+                },
+                error: function (data, status, xhr) {
+                 
+                    $("#try6Res").html(JSON.stringify(JSON.stringify(xhr)))
+                    $("#try6Restext").html(JSON.stringify(status))
+                }
+            });
+
+        });
+
+       
+    });
+</script>
+}
