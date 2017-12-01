@@ -20,6 +20,25 @@
     <section class="content-wrapper main-content clear-fix"> 
 
          <div class="col-md-12">
+             <h4>Introduction</h4>
+              <p>Hello, I tried to create the application as simple as possible.  The home page gives a list of all APIs created. Expanding the API panel will give you an interface/library required on how to use the API.
+              </p>
+
+             <h4>Project Structure</h4>
+             <p>
+                 Both part1 and part2 are found in the same project, it would be easier to run the application. The Home controller returns my views and the Product controller holds my APIs.
+             </p>
+
+             <h4>Data Storage</h4>
+             <p>
+                 A local database has been used to store the data. A seeding method is populating the db with some initial data in the migration file.
+             </p>
+
+             <h4>Assumptions</h4>
+             <p>
+             -Authentication is not present but, the project has been designed to manage the basket of items for a specific customer (Customer Id “1”). A basic authentication with a token based mechanism can be use later to authenticate multiple users. <br/>
+             -The API does not cover auditing, invoicing, customer and product management.
+             </p>
           </div>
     </section>
 </div>
